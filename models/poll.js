@@ -5,16 +5,16 @@ const PollSchema = new mongoose.Schema({
         type: String,
         require: [true, 'Please provide a poll'],
     },
-    type:{
-        type:String
-    },
-    views:Number,
     choices:[
         {
         value:String,
         votes:Number
     }
-    ]
+    ],
+    status:{
+        type : String,
+        enum:['Ongoing','Completed']
+    }
 })
 
 

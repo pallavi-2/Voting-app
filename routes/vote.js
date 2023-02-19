@@ -3,27 +3,6 @@ const poll = require('../models/poll')
 const router = express.Router()
 const Poll = require('../models/poll')
 
-// router.post('/vote/:poll_id', async (req, res) => {
-//     try {
-//         const value = req.body.value
-//         const pollId = req.params.poll_id
-//         // const result = await Poll.findByIdAndUpdate({_id:pollId},{$inc:{["choices.$.votes"]:1}},{new:true})
-
-//         const poll =await Poll.findById({_id:pollId})
-//         poll.choices.map((element,index)=>{
-//             if(element.value== value){
-//                 const array_id = element._id
-//                 console.log(array_id)
-//                 // const result = await Poll.findByIdAndUpdate({_id:pollId , 'choices[index]._id':})
-//             }
-//         })
-//         res.status(200).send(result)
-
-//     } catch (err) {
-//         res.status(400).send(err)
-//     }
-// })
-
 router.post('/vote/:poll_id', async (req, res) => {
     try {
         const value = req.body.value
