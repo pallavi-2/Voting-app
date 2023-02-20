@@ -2,25 +2,32 @@ const express = require('express')
 const poll = require('../models/poll')
 const router = express.Router()
 const Poll = require('../models/poll')
+const auth = require('../authentication/auth')
+const Subscribe = require('../models/subscribe')
 
 router.post('/vote/:poll_id', async (req, res) => {
     try {
+        const { userId, userName } = req.user
         const value = req.body.value
         const pollId = req.params.poll_id
-        const c = '63f1c80dd03f3eb575e13d7d'
-        const poll = await Poll.findById({_id:pollId})
-        // res.send(poll)
-        // console.log(poll)
-        const result = await Poll.findByIdAndUpdate({_id:pollId},{$inc:{['choices.$[elem].votes']:1}},{arrayFilters: [{ 'elem.value': value }]})
-        res.status(200).send(result)
+        const result = await Poll.findByIdAndUpdate({ _id: pollId }, { $inc: { ['choices.$[elem].votes']: 1 } }, { arrayFilters: [{ 'elem.value': value }] })
+        res.status(200).send({ userId, userName, result })
 
     } catch (err) {
         res.status(400).send(err)
     }
 })
 
-router.post('/subscribe', async (req, res) => {
-    res.send('Subscribed')
+router.post('/subscribe/:poll_id', async (req, res) => {
+    const { userId, userName } = req.user
+    const pollId = req.params.poll_id
+    try {
+        const subscribe = new Subscribe({ pollId: pollId, createdBy: userId })
+        await subscribe.save()
+    } catch (err) {
+        res.status(400).json(err)
+    }
+
 })
 
 router.post('/createpoll', async (req, res) => {

@@ -8,7 +8,7 @@ router.get('/allpolls', async (req, res) => {
         const queryObject = {}
 
         if (search) {
-            queryObject.search = { $regex: search, $options: 'i' }
+            queryObject.name = { $regex: search, $options: 'i' }
         }
 
         if (status && status !== 'all') {

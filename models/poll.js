@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const PollSchema = new mongoose.Schema({
     name:{
         type: String,
-        require: [true, 'Please provide a poll'],
+        required: [true, 'Please provide a poll'],
     },
     choices:[
         {
@@ -14,6 +14,11 @@ const PollSchema = new mongoose.Schema({
     status:{
         type : String,
         enum:['Ongoing','Completed']
+    },
+    createdBy:{
+        type:mongoose.Schema.Types.ObjectId,
+        required:true,
+        ref:'User'
     }
 })
 
