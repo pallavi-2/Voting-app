@@ -48,6 +48,18 @@ router.get('/votedpolls',async(req,res)=>{
     }
 })
 
+router.patch('/updatepoll/:pollId', async(req,res)=>{
+    const pollId = req.params.pollId
+    const userId = req.user.userId
+    const Poll = await Poll.findByIdAndUpdate({
+        _id:pollId, createdBy:userId
+    },req.body,{
+        new:true,runvalidators:true
+    })
+
+
+})
+
 router.post('/vote/:poll_id', async (req, res) => {
     try {
         const { userId, userName } = req.user
