@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const Poll = require('../models/poll')
 
 const UserSchema = new mongoose.Schema({
     name: {
@@ -23,6 +24,10 @@ const UserSchema = new mongoose.Schema({
         required: [true, 'Please provide password'],
         minlength: 6,
     },
+    pollsId:[]
+},
+{
+    timestamps:true
 })
 
 UserSchema.pre('save', async function () {
@@ -44,5 +49,6 @@ UserSchema.methods.comparePassword = async function (providedPassword) {
     const isMatch = await bcrypt.compare(providedPassword, this.password)
     return isMatch
 }
+
 
 module.exports = mongoose.model('User', UserSchema)
