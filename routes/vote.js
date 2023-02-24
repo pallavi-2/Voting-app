@@ -24,7 +24,7 @@ router.post('/createpoll', async (req, res) => {
 router.get('/createdpolls',async(req,res)=>{
     try{
         const userId = req.user.userId
-        const createdPolls = await Poll.find({userId})
+        const createdPolls = await Poll.find({createdBy:userId})
         res.send(createdPolls)
     }catch(err){
         res.status(400).json(err)
